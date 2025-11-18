@@ -3,204 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌎 CESC DTR & HT CONSUMER LOCATION V4.0</title>
+    <title>⚡ CESC DTR & HT LOCATION CHAT</title>
     <style>
-        /* --- Defined Colors (Light Mode Defaults) --- */
+        /* --- Defined Colors (Dark Mode Defaults) --- */
         :root {
-            --primary-color: #00a896;
-            --secondary-color: #38a798;
-            --text-color: #333;
-            --background-color: #f0f4f7;
-            --container-bg: #fff;
-            --input-bg: #fff;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --light-bg: #f5f5f5;
-            --border-color: #ddd;
-            --placeholder-color: #999;
-            --highlight-bg: #e6fffb;
-            --marquee-color: #e65c00;
-            --marquee-bg: #fff3e0;
-        }
-        /*
-        body:not(.light-mode) {
-            --primary-color: #26c485;
-            --secondary-color: #008779;
-            --text-color: #e0e0e0;
-            --background-color: #121212;
-            --container-bg: #1e1e1e;
-            --input-bg: #2c2c2c;
-            --shadow-color: rgba(38, 196, 133, 0.15);
-            --light-bg: #2c2c2c;
-            --border-color: #444;
-            --placeholder-color: #bbb;
-            --highlight-bg: #004d43;
+            --primary-color: #075e54; /* WhatsApp Green */
+            --secondary-color: #128c7e;
+            --text-color: #e9e8e9; /* Light text */
+            --background-color: #0b141a; /* Dark background (WhatsApp Chat List BG) */
+            --chat-bg: #111b21; /* Darker Chat BG */
+            --message-bg-self: #075e54; /* Sent Message Bubble */
+            --message-bg-other: #202c33; /* Received Message Bubble */
+            --input-bg: #2a3942; /* Message Input BG */
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --border-color: #3e4c5a;
+            --placeholder-color: #8696a0;
+            --highlight-bg: #3c544d; /* Highlight for search */
             --marquee-color: #ff9800;
             --marquee-bg: #331e00;
         }
-        */
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
             margin: 0;
-            padding: 30px 10px;
+            padding: 0;
             display: flex;
             justify-content: center;
+            align-items: flex-end;
             min-height: 100vh;
             transition: background-color 0.3s, color 0.3s;
+            overflow: hidden; /* Prevent body scroll */
         }
+
         .container {
+            display: flex;
+            flex-direction: column;
             width: 100%;
             max-width: 650px;
-            background: var(--container-bg);
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 12px 40px var(--shadow-color);
+            height: 100vh;
+            background: var(--chat-bg);
+            box-shadow: 0 0 20px var(--shadow-color);
             transition: background 0.3s, box-shadow 0.3s;
         }
+
+        /* --- Header (Like a WhatsApp Group Header) --- */
         .header {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .title-block {
-            flex-grow: 1;
-            text-align: center;
-            line-height: 1.3;
+            background-color: var(--input-bg); /* Use input color for header */
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 10;
         }
         .title-block h1 {
-            color: var(--primary-color);
+            color: var(--text-color);
             margin: 0;
-            font-size: 24px;
-            letter-spacing: -0.5px;
-            font-weight: 700;
+            font-size: 18px;
+            font-weight: 600;
         }
-        .title-block .sub-title {
-            color: var(--text-color);
-            font-size: 16px;
-            font-weight: 500;
-            opacity: 0.8;
-            margin-top: 5px;
-            display: block;
-        }
-        .title-block .credit {
-            color: var(--secondary-color);
-            font-size: 14px;
-            font-weight: 400;
-            margin-top: 3px;
-            display: block;
-        }
-        #dark-mode-toggle {
-            background: none;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            margin-top: 10px;
-            margin-left: 0;
-            display: inline-block;
-        }
-        #dark-mode-toggle:hover {
-            background-color: var(--primary-color);
-            color: var(--container-bg);
-        }
-        body:not(.light-mode) #dark-mode-toggle {
-            border-color: var(--text-color);
-            color: var(--text-color);
-        }
-        
-        body:not(.light-mode) #dark-mode-toggle:hover {
-            background-color: var(--primary-color);
-            color: #1e1e1e;
-        }
-        #search-input {
-            width: 100%;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 25px;
-            box-sizing: border-box;
-            font-size: 17px;
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-        #search-input::placeholder {
+        .title-block .sub-title, .title-block .credit {
             color: var(--placeholder-color);
+            font-size: 12px;
+            font-weight: 400;
+            margin-top: 2px;
+            display: block;
         }
-        #search-input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(0, 168, 150, 0.2);
-            outline: none;
-        }
-        /*
-        body:not(.light-mode) #search-input:focus {
-            box-shadow: 0 0 0 4px rgba(38, 196, 133, 0.3);
-        }
-        */
+
+        /* --- Marquee (As a pinned info message) --- */
         .info-marquee {
             width: 100%;
-            margin-bottom: 25px;
             padding: 8px 10px;
             background-color: var(--marquee-bg);
-            border: 1px solid var(--marquee-color);
-            border-radius: 8px;
-            font-size: 14px;
             color: var(--marquee-color);
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 500;
             white-space: nowrap;
             overflow: hidden;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid var(--border-color);
         }
+
+        /* --- Location List (The "Chat Messages" Area) --- */
         #place-list-display {
             list-style: none;
-            padding: 0;
+            padding: 10px 10px 10px 10px;
             margin: 0;
-            max-height: 50vh;
+            flex-grow: 1;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column-reverse; /* New items appear at the bottom */
+            scroll-behavior: smooth;
         }
+        
+        /* Scrollbar styling for dark mode */
+        #place-list-display::-webkit-scrollbar {
+            width: 8px;
+        }
+        #place-list-display::-webkit-scrollbar-track {
+            background: var(--chat-bg);
+        }
+        #place-list-display::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 20px;
+            border: 2px solid var(--chat-bg);
+        }
+
+
         .place-item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 15px;
-            margin-bottom: 12px;
-            background-color: var(--light-bg);
-            border-radius: 10px;
-            transition: all 0.2s ease, opacity 0.4s, transform 0.4s;
-            border-left: 5px solid transparent;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 85%;
+            margin-bottom: 8px;
+            transition: opacity 0.4s, transform 0.4s;
             opacity: 0;
             transform: translateY(10px);
+            align-self: flex-start; /* Default alignment */
         }
         .place-item.animated {
             opacity: 1;
             transform: translateY(0);
         }
-        .place-item:hover {
-            background-color: var(--container-bg);
-            border-left-color: var(--primary-color);
-            box-shadow: 0 4px 15px var(--shadow-color);
-            transform: translateY(-2px);
+        .place-item:nth-child(odd) {
+            align-self: flex-end; /* Alternate alignment to mimic chat */
+            max-width: 95%;
         }
-        /*
-        body:not(.light-mode) .place-item {
-            border: 1px solid #444;
+
+        /* The Message Bubble */
+        .place-content {
+            background-color: var(--message-bg-other);
+            padding: 10px 12px;
+            border-radius: 7px;
+            border-top-left-radius: 0;
+            position: relative;
+            box-shadow: 0 1px 0.5px rgba(11, 20, 26, .13);
         }
-        body:not(.light-mode) .place-item:hover {
-            background-color: #383838;
+        .place-item:nth-child(odd) .place-content {
+            background-color: var(--message-bg-self);
+            border-top-right-radius: 0;
+            border-top-left-radius: 7px;
         }
-        */
+
+        .place-name {
+            font-weight: 400;
+            font-size: 15px;
+            word-break: break-word;
+            padding-right: 40px; /* Space for map link/time stamp */
+            line-height: 1.4;
+        }
         .place-name .highlight {
             background-color: var(--highlight-bg);
-            padding: 2px 4px;
-            border-radius: 4px;
+            padding: 0;
+            border-radius: 0;
             font-weight: 700;
         }
+
+        .map-link {
+            position: absolute;
+            bottom: 3px;
+            right: 5px;
+            text-decoration: none;
+            color: #8696a0; /* Time stamp color */
+            font-size: 10px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .map-link:hover {
+            color: #1ed1a3; /* Primary hover */
+        }
+
         #place-list-display li.no-results {
             background-color: transparent !important;
             border-left: none !important;
@@ -209,60 +179,89 @@
             font-style: italic;
             color: var(--placeholder-color);
             padding: 20px 0;
-            margin: 0;
+            margin: auto; /* Center it */
             opacity: 1 !important;
             transform: none !important;
+            max-width: 100% !important;
         }
-        .place-name {
-            font-weight: 600;
+
+        /* --- Search Bar (Like Message Composer at the Bottom) --- */
+        .search-area {
+            padding: 10px 10px;
+            background-color: var(--chat-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+        #search-input {
             flex-grow: 1;
-            font-size: 17px;
-            word-break: break-word;
-            padding-right: 15px;
-        }
-        .map-link {
-            text-decoration: none;
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 10px 18px;
+            padding: 12px 20px;
+            border: none;
             border-radius: 20px;
             font-size: 15px;
-            font-weight: 500;
-            transition: background-color 0.3s, transform 0.1s;
-            white-space: nowrap;
-            flex-shrink: 0;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            margin-right: 10px;
         }
-        .map-link:hover {
+        #search-input::placeholder {
+            color: var(--placeholder-color);
+        }
+        #search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 1px var(--secondary-color);
+        }
+
+        #dark-mode-toggle {
+            background-color: var(--secondary-color);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1;
+            transition: background-color 0.3s, transform 0.1s;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+        #dark-mode-toggle:hover {
             background-color: var(--primary-color);
             transform: scale(1.05);
         }
+
+        /* Hide the original credit span as it's too much for a chat UI */
+        .title-block .credit br { display: none; }
+        .title-block .credit { display: none; }
+
     </style>
 </head>
-<body class="light-mode">
+<body>
     <div class="container">
         <div class="header">
             <div class="title-block">
-                <h1>CESC DTR & HT CONSUMER LOCATION</h1>
-                <span class="sub-title">Version 4.0(beta)</span>
-                <span class="credit">by <br>Aritra from HT Shift!</br></span>
-               <button id="dark-mode-toggle">🙏🏼🙏🏼🙏🏼</button>
+                <h1>⚡ CESC DTR & HT LOCATION CHAT</h1>
+                <span class="sub-title">Locations: DTR, HT Consumers & RMU's | V4.0</span>
             </div>
         </div>
-        <input type="text" id="search-input" placeholder="🔍 Start typing to filter locations...">
+
         <div class="info-marquee">
             <marquee behavior="scroll" direction="left" scrollamount="4">
                 Now with Locations of All Sources, HT Consumers and Standalone RMU's as updated up to 01.11.2025
             </marquee>
         </div>
-        <ul id="place-list-display"></ul>
+        
+        <ul id="place-list-display">
+            </ul>
+        
+        <div class="search-area">
+            <input type="text" id="search-input" placeholder="🔍 Filter location by typing name...">
+            <button id="dark-mode-toggle" title="Toggle Mode">🚀</button>
+        </div>
     </div>
     <script>
-    /*
-        document.getElementById('dark-mode-toggle').onclick = function() {
-        document.body.classList.toggle('light-mode');
-    };
-    */
-
     let allLocations = [];
     let filteredLocations = [];
     const listEl = document.getElementById('place-list-display');
@@ -276,15 +275,23 @@
 
     function renderList(locations, query = '') {
         if (!locations.length) {
-            listEl.innerHTML = '<li class="no-results">No locations found.</li>';
+            listEl.innerHTML = '<li class="no-results">No locations found matching your filter.</li>';
             return;
         }
-        listEl.innerHTML = locations.map(loc => `
+
+        // Iterate in reverse to display in "chat order" (oldest/first at top when reversed)
+        // Since we are using flex-direction: column-reverse in CSS, we map in standard order
+        listEl.innerHTML = locations.map((loc, index) => `
             <li class="place-item animated">
-                <span class="place-name">${highlight(loc.name, query)}</span>
-                <a class="map-link" href="${loc.map_url}" target="_blank">Open in Map</a>
+                <div class="place-content">
+                    <span class="place-name">${highlight(loc.name, query)}</span>
+                    <a class="map-link" href="${loc.map_url}" target="_blank">View Map 🔗</a>
+                </div>
             </li>
         `).join('');
+
+        // Scroll to the bottom to mimic opening a chat
+        listEl.scrollTop = listEl.scrollHeight;
     }
 
     function filterLocations(query) {
@@ -300,6 +307,12 @@
         debounceTimer = setTimeout(() => {
             filterLocations(searchInput.value);
         }, 200);
+    });
+
+    // Dark Mode Toggle is now a non-functional placeholder button
+    document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+        // Just a visual change since the UI is already hardcoded to dark mode
+        alert('Filtering is done via the text box below.');
     });
 
     async function loadLocations() {
