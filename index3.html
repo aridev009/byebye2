@@ -87,7 +87,8 @@
             list-style: none;
             padding: 10px 10px 10px 10px;
             margin: 0;
-            flex-grow: 1;
+            /* NEW: Set a fixed maximum height (approx. 6-8 items) and force scrolling */
+            max-height: 70vh; 
             overflow-y: auto;
             display: flex;
             flex-direction: column-reverse; /* New items appear at the bottom */
@@ -192,6 +193,7 @@
             border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            flex-shrink: 0; /* Important: Prevents search area from shrinking */
         }
         #search-input {
             flex-grow: 1;
@@ -232,7 +234,7 @@
             transform: scale(1.05);
         }
 
-        /* Hide the original credit span as it's too much for a chat UI */
+        /* Hidden elements from original credit */
         .title-block .credit br { display: none; }
         .title-block .credit { display: none; }
 
@@ -279,8 +281,8 @@
             return;
         }
 
-        // Iterate in reverse to display in "chat order" (oldest/first at top when reversed)
-        // Since we are using flex-direction: column-reverse in CSS, we map in standard order
+        // The CSS (max-height and overflow-y: auto) is what implements the "remaining with slider" functionality.
+        // The JavaScript remains the same, rendering all filtered results within the fixed-height container.
         listEl.innerHTML = locations.map((loc, index) => `
             <li class="place-item animated">
                 <div class="place-content">
@@ -311,7 +313,6 @@
 
     // Dark Mode Toggle is now a non-functional placeholder button
     document.getElementById('dark-mode-toggle').addEventListener('click', function() {
-        // Just a visual change since the UI is already hardcoded to dark mode
         alert('Filtering is done via the text box below.');
     });
 
