@@ -21,6 +21,7 @@
             --marquee-color: #e65c00;
             --marquee-bg: #fff3e0;
         }
+        /*
         body:not(.light-mode) {
             --primary-color: #26c485;
             --secondary-color: #008779;
@@ -36,6 +37,7 @@
             --marquee-color: #ff9800;
             --marquee-bg: #331e00;
         }
+        */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--background-color);
@@ -111,6 +113,7 @@
             border-color: var(--text-color);
             color: var(--text-color);
         }
+        
         body:not(.light-mode) #dark-mode-toggle:hover {
             background-color: var(--primary-color);
             color: #1e1e1e;
@@ -135,9 +138,11 @@
             box-shadow: 0 0 0 4px rgba(0, 168, 150, 0.2);
             outline: none;
         }
+        /*
         body:not(.light-mode) #search-input:focus {
             box-shadow: 0 0 0 4px rgba(38, 196, 133, 0.3);
         }
+        */
         .info-marquee {
             width: 100%;
             margin-bottom: 25px;
@@ -182,12 +187,14 @@
             box-shadow: 0 4px 15px var(--shadow-color);
             transform: translateY(-2px);
         }
+        /*
         body:not(.light-mode) .place-item {
             border: 1px solid #444;
         }
         body:not(.light-mode) .place-item:hover {
             background-color: #383838;
         }
+        */
         .place-name .highlight {
             background-color: var(--highlight-bg);
             padding: 2px 4px;
@@ -250,9 +257,11 @@
         <ul id="place-list-display"></ul>
     </div>
     <script>
-    document.getElementById('dark-mode-toggle').onclick = function() {
+    /*
+        document.getElementById('dark-mode-toggle').onclick = function() {
         document.body.classList.toggle('light-mode');
     };
+    */
 
     let allLocations = [];
     let filteredLocations = [];
